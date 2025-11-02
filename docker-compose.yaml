@@ -1,0 +1,18 @@
+services:
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress-app
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: wordpress-db.cnw4ociygpfp.ap-southeast-1.rds.amazonaws.com
+      WORDPRESS_DB_USER: wpadmin
+      WORDPRESS_DB_PASSWORD: WpPass123!
+      WORDPRESS_DB_NAME: exampledb
+    volumes:
+      - wordpress:/var/www/html
+
+volumes:
+  wordpress:
