@@ -1,0 +1,20 @@
+services:
+
+  wordpress:
+    image: wordpress:latest # Use latest tag for clarity
+    container_name: wordpress-app
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      # These values will be replaced by the EC2 user_data script!
+      WORDPRESS_DB_HOST: DB_HOST_PLACEHOLDER
+      WORDPRESS_DB_USER: wpadmin
+      WORDPRESS_DB_PASSWORD: WpPass123!
+      WORDPRESS_DB_NAME: wordpressdb
+    volumes:
+      - wordpress:/var/www/html
+      - ~/my-wp-themes/:/var/www/html/wp-content/themes/customwp
+
+volumes:
+  wordpress:
