@@ -1,0 +1,35 @@
+name: WordPress EC2 Deployment
+
+# Trigger the workflow on pushes to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+  # Allows manual triggering for testing
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to EC2 via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        # These values are pulled from your GitHub Repository Secrets
+        host: ${{ secrets.AWS_HOST }}
+        username: ${{ secrets.AWS_USERNAME }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        port: 22
+
+        # The script execution assumes deploy.sh is in the home directory
+        script: |
+          echo "Starting remote deployment script..."
+          # Change to the directory where deploy.sh lives (assuming user home directory)
+          cd /home/${{ secrets.AWS_USERNAME }} 
+          # Execute the script
+          sudo ./deploy.sh
+          echo "Remote script executed."
