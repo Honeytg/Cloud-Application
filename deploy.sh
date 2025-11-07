@@ -17,18 +17,22 @@ cd /home/ec2-user/wordpress-docker
 #git pull
 sudo git pull
 
+sleep 10 
+
 #pull latest image and recreate docker
 docker-compose up -d
 
 sleep 15
 
 #copy all the files
-docker cp /wordpress-docker/index.php wordpress-app:/var/www/html/wp-content/themes/customwp
-docker cp /wordpress-docker/style.css wordpress-app:/var/www/html/wp-content/themes/customwp
-docker cp /wordpress-docker/functions.php wordpress-app:/var/www/html/wp-content/themes/customwp
+docker cp ./index.php wordpress-app:/var/www/html/wp-content/themes/customwp/
+docker cp ./functions.php wordpress-app:/var/www/html/wp-content/themes/customwp/
+docker cp ./style.css wordpress-app:/var/www/html/wp-content/themes/customwp/
 
 #restart docker container
 docker restart wordpress-app
+
+sleep 5
 
 echo "=========================================="
 echo " Deployment Script Finished"
