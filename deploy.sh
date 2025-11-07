@@ -17,6 +17,11 @@ cd /home/ec2-user/wordpress-docker
 #git pull
 sudo git pull
 
+#pull latest image and recreate docker
+docker-compose up -d
+
+sleep 15
+
 #copy all the files
 docker cp /wordpress-docker/index.php wordpress-app:/var/www/html/wp-content/themes/customwp
 docker cp /wordpress-docker/style.css wordpress-app:/var/www/html/wp-content/themes/customwp
