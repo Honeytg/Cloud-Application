@@ -3,7 +3,7 @@
 
 # Configuration
 REPO_URL="https://github.com/Honeytg/Cloud-Application.git"
-DOCKER_SUBDIR="wordpress-docker"
+DOCKER_SUBDIR="/home/ec2-user/wordpress-docker"
 CONTAINER_NAME="wordpress-app" # Used for docker cp and restart commands
 THEME_DIR="/var/www/html/wp-content/themes/customwp"
 
@@ -57,20 +57,13 @@ fi
 echo "5. Checking if container '$CONTAINER_NAME' is running to copy files..."
 
 # Give the container a moment to start up
-sleep 5
+sleep 15
 
-if sudo docker ps --format '{{.Names}}' | grep -q "$CONTAINER_NAME"; then
-    echo "   -> Container found. Creating custom theme directory: $THEME_DIR"
-    # Create the target theme directory inside the container
-    sudo docker exec "$CONTAINER_NAME" mkdir -p "$THEME_DIR"
 
-    # Copy files from the local directory (assumed to be within wordpress-docker/) to the container
-    echo "   -> Copying index.php, style.css, and functions.php..."
-    sudo docker cp index.php "$CONTAINER_NAME":"$THEME_DIR"/index.php
-    sudo docker cp style.css "$CONTAINER_NAME":"$THEME_DIR"/style.css
-    sudo docker cp functions.php "$CONTAINER_NAME":"$THEME_DIR"/functions.php
     echo "   -> Files copied successfully."
-
+    docker cp /wordpress-docker/index.php wordpress-app:/var/www/html/wp-content/themes/customwp
+    docker cp /wordpress-docker/style.css wordpress-app:/var/www/html/wp-content/themes/customwp
+    docker cp /wordpress-docker/functions.php wordpress-app:/var/www/html/wp-content/themes/customwp
     # Restart the container to ensure PHP/web server picks up the new files
     echo "6. Restarting the container: $CONTAINER_NAME"
     sudo docker restart "$CONTAINER_NAME"
