@@ -25,10 +25,8 @@ jobs:
         key: ${{ secrets.AWS_SSH_KEY }}
         port: 22
 
-        # The script execution assumes deploy.sh is in the home directory
+        # The script execution
         script: |
           echo "Starting remote deployment script..."
-          cd /home/ec2-user/wordpress-docker 
-          # Execute the script
-          sudo ./deploy.sh
+          sudo sh -x /home/ec2-user/wordpress-docker/deploy.sh
           echo "Remote script executed."
