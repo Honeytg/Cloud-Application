@@ -28,8 +28,9 @@ jobs:
         # The script execution assumes deploy.sh is in the home directory
         script: |
           echo "Starting remote deployment script..."
-          # cd to wordpress-docker where deploy.sh resides
-          cd /home/ec2-user/wordpress-docker
+          # CORRECTED: Navigate to the user's home directory where deploy.sh is located
+          # ${{ secrets.AWS_USERNAME }} will resolve to 'ec2-user'
+          cd /home/${{ secrets.AWS_USERNAME }} 
           # Execute the script
           sudo ./deploy.sh
           echo "Remote script executed."
