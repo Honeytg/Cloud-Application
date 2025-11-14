@@ -1,1 +1,1 @@
-<h1>Welcome to our Monkey Tree House!</h1>
+<h1>Welcome to our Monkey House!</h1>
